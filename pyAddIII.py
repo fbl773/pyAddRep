@@ -8,6 +8,14 @@
 #   Synopsis: python - beans on toast... weird
 
 """
+	getAverage(l)
+	l - a list of elements
+	return sum(l)
+"""
+def getAverage(l):
+	return sum(l)/len(l)
+
+"""
 	createList(cap)
 	-----------------
 	cap - an integer variable that represents the #of elements
@@ -31,14 +39,41 @@ def createList(cap):
 """
 def displayStats(elemList):
 	sumElements=sum(elemList)
-	average = float(sumElements)/len(elemList)
 	elemList.sort()
 	print "Final Score: " + str(sumElements)
-	print "Average was: " + str(average)
-	print "median is: " + str((elemList[len(elemList)/2]))
-	return
+	print "Average was: " + str(getAverage(elemList))
+	print "Median is: "  + str(int(elemList[(len(elemList)/2)]))
+	return 
 
 
+
+
+
+
+
+"""
+	variance(l)
+	l - a list of elements
+"""
+
+def getVariance(l):
+	variedList = [] # will hold the modified elements
+	avg = getAverage(l)
+	numElems = len(l)
+	for e in l:
+		modMe = e
+		print "Element to Be Modifed: " + str(modMe)
+		variedList.append((float(modMe-avg) * (float(modMe-avg))))
+	
+	print "varied List contains " + str(variedList)
+# 	print "sum of varied list was: " + str(sum(variedList))
+# 	print "the length of the list is: " + str(len(l))
+# 	print "and is to be multiplied by: " + str(float(1.0/len(l)))
+	
+	return (float(1.0/len(l)) * sum(variedList))
+	
+	
+	
 ###############################################
 print "Begin Adder"
 
@@ -69,5 +104,14 @@ while (count < (int(totalElements))):
 	count += 1
 
 print rowStr
+	
+	
+test = raw_input("calculate variance? (y/n)")
+
+if test is 'y':
+	print "variance is: " + str(getVariance(listOfElem))
+else:
+	print "bummer"
+	
 	
 	
