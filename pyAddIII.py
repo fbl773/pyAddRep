@@ -6,6 +6,7 @@
 #   Tutorial: T08
 # Assignment: lab _
 #   Synopsis: python - beans on toast... weird
+import math
 
 """
 	getAverage(l)
@@ -37,42 +38,68 @@ def createList(cap):
 	elemList - a list of all the given elements
 	return - nothing.
 """
-def displayStats(elemList):
-	sumElements=sum(elemList)
-	elemList.sort()
+def displayStats(l):
+	sumElements=sum(l)
+	l.sort()
 	print "Final Score: " + str(sumElements)
-	print "Average was: " + str(getAverage(elemList))
-	print "Median is: "  + str(int(elemList[(len(elemList)/2)]))
+	print "Average was: " + str(getAverage(l))
+	print "Median is: "  + str(int(l[(len(l)/2)]))
+	print "Variance is: " + str(getVariance(l))
+	print "Standard Deviation is: " + str(getStdDev(l))
+	print "Mean Absolute Deviation: " + str(getMeanDeviance(l))
+	print "Range is: " + str(getRange(l))
+	
 	return 
 
+"""
+	getRange(l)
+	-----------------
+	l - a list of elements
+	return - the difference between the largest and smallest elements
+"""
+def getRange(l):
+	l.sort()
+	return float(abs(l[len(l)-1] - l[0]))
 
+"""
+	getMeanDeviance(l)
+	l - a list of elements
+	return - whatever the f a mean Deviance is. (sum of the difference)^2
+	"""
+def getMeanDeviance(l):
+	meanDevList = [] # will hold the modified elements
+	avg = getAverage(l)
+	numElems = len(l)
+	for e in l:
+		modMe = e
+		meanDevList.append((abs(float(modMe-avg))))
 
-
-
-
+	return (float(1.0/len(l)) * sum(meanDevList))
 
 """
 	variance(l)
 	l - a list of elements
+	return - the variance of the data set!
 """
-
 def getVariance(l):
 	variedList = [] # will hold the modified elements
 	avg = getAverage(l)
 	numElems = len(l)
 	for e in l:
 		modMe = e
-		print "Element to Be Modifed: " + str(modMe)
 		variedList.append((float(modMe-avg) * (float(modMe-avg))))
-	
-	print "varied List contains " + str(variedList)
-# 	print "sum of varied list was: " + str(sum(variedList))
-# 	print "the length of the list is: " + str(len(l))
-# 	print "and is to be multiplied by: " + str(float(1.0/len(l)))
-	
+		
 	return (float(1.0/len(l)) * sum(variedList))
-	
-	
+		
+"""
+	getStdDev(l)
+	--------------
+	l - a list of elements
+	return - the Standard Deviation
+"""
+def getStdDev(l):
+	return math.sqrt(getVariance(l))
+		
 	
 ###############################################
 print "Begin Adder"
@@ -87,11 +114,6 @@ totalElements = int(rows) * int(cols)
 #Create List and Grab Total
 listOfElem = createList(totalElements)
 
-#digest list
-displayStats(listOfElem)
- 
- 
-
 #Construct Grid
 print "Sorted grid of " + str(totalElements) + " is: "
 
@@ -104,14 +126,7 @@ while (count < (int(totalElements))):
 	count += 1
 
 print rowStr
-	
-	
-test = raw_input("calculate variance? (y/n)")
 
-if test is 'y':
-	print "variance is: " + str(getVariance(listOfElem))
-else:
-	print "bummer"
-	
-	
+#digest list
+displayStats(listOfElem)	
 	
