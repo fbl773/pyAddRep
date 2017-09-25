@@ -26,10 +26,10 @@ def createList(cap):
 	ans = 0
 	elemList = []
 	while (cap > 0):
-		elem = raw_input("enter element: ")
+		elem = raw_input()
 		elemList.append(float(elem))
 		ans = float(elem) + float(ans)
-		cap = int(cap) - int(1)
+		cap = int(cap) - 1
 	return elemList
 
 """
@@ -38,18 +38,18 @@ def createList(cap):
 	elemList - a list of all the given elements
 	return - nothing.
 """
-def displayStats(l):
+def getStats(l):
 	sumElements=sum(l)
-	l.sort()
-	print "Final Score: " + str(sumElements)
-	print "Average was: " + str(getAverage(l))
-	print "Median is: "  + str(int(l[(len(l)/2)]))
-	print "Variance is: " + str(getVariance(l))
-	print "Standard Deviation is: " + str(getStdDev(l))
-	print "Mean Absolute Deviation: " + str(getMeanDeviance(l))
-	print "Range is: " + str(getRange(l))
+	statStr=""
+	statStr += "Summation is: " + str(sumElements)
+	statStr += "\nAverage is: " + str(getAverage(l))
+	statStr += "\nMedian is: "  + str(getMedian(l))
+	statStr +=  "\nVariance is: " + str(getVariance(l))
+	statStr +=  "\nStandard Deviation is: " + str(getStdDev(l))
+	statStr +=  "\nMean Absolute Deviation: " + str(getMeanDeviance(l))
+	statStr +=  "\nRange is: " + str(getRange(l))
 	
-	return 
+	return statStr
 
 """
 	getRange(l)
@@ -100,33 +100,64 @@ def getVariance(l):
 def getStdDev(l):
 	return math.sqrt(getVariance(l))
 		
+"""
+	getMedian(l)
+	-------------
+	l - a list of elements
+	return if even, 2 middle most averaged
+			else, middle most element
 	
+"""
+def getMedian(l):
+	center = len(l)/2 # yes I'm mad i used american "center" not the proper centre, but its written...
+	if(len(l)%2 == 0):
+		return (float(l[center-1]) + float(l[center]))/2.0
+	else:
+		return float(l[center])
+
+"""
+	makeGrid(l)
+	l - a list of elements
+	return a string that represents the data as a matrix/list
+"""
+def makeGrid(l):
+	count = 0
+	print "lenght of list is: " + str(int(len(l)))
+	rowStr  = "\n"
+	while (count < len(l)):
+		if(count % int(cols) == 0 and count != 0):
+			rowStr += '\n'
+		rowStr += str(listOfElem[count]) + ' '
+		count += 1
+
+	return rowStr
+
+"""
+	sortList(l):
+	l - a list of elements.
+	return a sorted list (hopefully)
+"""
+def sortList(l):
+	l.sort()
+	return l
+
+
+
 ###############################################
 print "Begin Adder"
 
 #take data
-rows = raw_input("please input rows: ")
-cols = raw_input("please input cols: ")
-totalElements = int(rows) * int(cols)
+rows = raw_input()
+cols = raw_input()
 
 
 
 #Create List and Grab Total
-listOfElem = createList(totalElements)
+listOfElem = createList(int(rows)*int(cols))
+print "unsorted is: " + makeGrid(listOfElem)
+print " \nsorted is: " + makeGrid(sortList(listOfElem))
+print getStats(listOfElem)
 
-#Construct Grid
-print "Sorted grid of " + str(totalElements) + " is: "
 
-count = 0
-rowStr  = ""
-while (count < (int(totalElements))):
-	if(count % int(cols) == 0 and count != 0):
-		rowStr += '\n'
-	rowStr += str(listOfElem[count]) + ' '
-	count += 1
 
-print rowStr
-
-#digest list
-displayStats(listOfElem)	
 	
